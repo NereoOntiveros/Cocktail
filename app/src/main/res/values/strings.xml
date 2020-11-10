@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Cocktail</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_cocktails_list">FRAGMENT COCKTAILS LIST</string>
+    <string name="fragment_cocktail_detail">FRAGMENT COCKTAIL DETAIL</string>
+    <string name="go_to_details">Go to details</string>
 </resources>

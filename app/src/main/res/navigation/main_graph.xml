@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.nereoontiveros.cocktail.ui.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="Cocktails"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_cocktailDetailFragment"
             app:destination="@id/cocktailDetailFragment" />
@@ -17,6 +17,6 @@
     <fragment
         android:id="@+id/cocktailDetailFragment"
         android:name="com.nereoontiveros.cocktail.ui.CocktailDetailFragment"
-        android:label="fragment_cocktail_detail"
+        android:label="Details"
         tools:layout="@layout/fragment_cocktail_detail" />
 </navigation>
