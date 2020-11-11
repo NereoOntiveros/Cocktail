@@ -5,12 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nereoontiveros.cocktail.R
+import com.nereoontiveros.cocktail.data.DataSource
+import com.nereoontiveros.cocktail.data.model.Drink
+import com.nereoontiveros.cocktail.domain.RepoImpl
+import com.nereoontiveros.cocktail.ui.viewmodel.MainViewModel
+import com.nereoontiveros.cocktail.ui.viewmodel.VMFactory
+import com.nereoontiveros.cocktail.vo.Resource
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(),MainAdapter.OnDrinkClickListener{
 
+    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImpl(DataSource()))  }//dependencies injection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +40,34 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_go_to_details.setOnClickListener{
-            findNavController().navigate(R.id.cocktailDetailFragment)
-        }
+        setupRecyclerView()
+        viewModel.fetchDrinksList.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                is Resource.Success -> {
+                    progressBar.visibility = View.GONE
+                    rv_drinks.adapter = MainAdapter(requireContext(),result.data,this)
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(), "An error occurred when fetching data ${result.exception}.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+
+
+    private fun setupRecyclerView(){
+        rv_drinks.layoutManager=LinearLayoutManager(requireContext())
+        rv_drinks.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
+    }
+
+    override fun onDrinkClick(drink: Drink) {
+        val bundle = Bundle()
+        bundle.putParcelable("drink",drink)
+        findNavController().navigate(R.id.cocktailDetailFragment,bundle)
     }
 
 
