@@ -5,5 +5,5 @@ import com.nereoontiveros.cocktail.vo.Resource
 
 interface Repo {
 
-    fun getDrinksList():Resource<List<Drink>>
+    suspend fun getDrinksList(drinkName:String):Resource<List<Drink>>
 }

@@ -5,7 +5,8 @@ import com.nereoontiveros.cocktail.data.model.Drink
 import com.nereoontiveros.cocktail.vo.Resource
 
 class RepoImpl(private val dataSource: DataSource):Repo {
-    override fun getDrinksList(): Resource<List<Drink>> {
-        return dataSource.generateDrinksList
+
+    suspend override fun getDrinksList(drinkName:String): Resource<List<Drink>> {
+        return dataSource.getDrinkByName(drinkName)
     }
 }
