@@ -4,14 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.MainFragment">
 
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/image_drink"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
 
     <TextView
+        android:id="@+id/tv_drink_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Margarita blue"
         android:gravity="center"
-        android:text="@string/fragment_cocktail_detail"
+        android:textStyle="bold"
         android:textSize="25sp"/>
+    <TextView
+        android:id="@+id/tv_drink_description"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
