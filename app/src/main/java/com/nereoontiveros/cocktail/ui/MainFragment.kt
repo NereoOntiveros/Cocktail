@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
@@ -28,6 +29,7 @@ class MainFragment : Fragment(),MainAdapter.OnDrinkClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
     }
 
     override fun onCreateView(
@@ -41,6 +43,11 @@ class MainFragment : Fragment(),MainAdapter.OnDrinkClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupSearchView()
+        setupObservers()
+    }
+
+    private fun setupObservers(){
         viewModel.fetchDrinksList.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -57,7 +64,19 @@ class MainFragment : Fragment(),MainAdapter.OnDrinkClickListener{
         })
     }
 
+    private fun setupSearchView(){
+        searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.setDrink(query!!)
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+    }
 
     private fun setupRecyclerView(){
         rv_drinks.layoutManager=LinearLayoutManager(requireContext())
