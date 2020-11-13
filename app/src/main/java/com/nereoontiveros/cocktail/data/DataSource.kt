@@ -22,5 +22,8 @@ class DataSource (private val appDataBase: AppDataBase){
         return Resource.Success(appDataBase.drinkDao().getAllFavouriteDrinks())
     }
 
+    suspend fun deleteDrink(drink:Drink){
+        appDataBase.drinkDao().deleteDrink(drink)
+    }
 
 }

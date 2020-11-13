@@ -18,4 +18,9 @@ class RepoImpl(private val dataSource: DataSource):Repo {
     override suspend fun insertDrink(drink: DrinkEntity) {
         dataSource.saveDrinkIntoRoom(drink)
     }
+
+
+    override suspend fun deleteDrink(drink: Drink) {
+        dataSource.deleteDrink(drink)
+    }
 }

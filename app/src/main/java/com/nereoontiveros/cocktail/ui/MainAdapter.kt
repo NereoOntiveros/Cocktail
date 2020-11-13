@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.nereoontiveros.cocktail.R
 import com.nereoontiveros.cocktail.base.BaseViewHolder
 import com.nereoontiveros.cocktail.data.model.Drink
+import com.nereoontiveros.cocktail.data.model.DrinkEntity
 import kotlinx.android.synthetic.main.drinks_row.view.*
 
 
@@ -19,7 +20,7 @@ class MainAdapter(private val context: Context, private val drinksList: List<Dri
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface OnDrinkClickListener{
-        fun onDrinkClick(drink:Drink)
+        fun onDrinkClick(drink:Drink, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -43,7 +44,7 @@ class MainAdapter(private val context: Context, private val drinksList: List<Dri
             Glide.with(context).load(item.image).centerCrop().into(itemView.img_drink)
             itemView.txt_title.text = item.name
             itemView.txt_description.text = item.description
-            itemView.setOnClickListener{ itemClickListener.onDrinkClick(item)}
+            itemView.setOnClickListener{ itemClickListener.onDrinkClick(item,position)}
         }
 
     }

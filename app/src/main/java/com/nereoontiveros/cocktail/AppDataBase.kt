@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.nereoontiveros.cocktail.data.model.DrinkEntity
 import com.nereoontiveros.cocktail.domain.DrinksDao
 
-@Database(entities = arrayOf(DrinkEntity::class),version=1)
+@Database(entities = arrayOf(DrinkEntity::class),version=1,exportSchema = false)
 abstract class AppDataBase :RoomDatabase(){
 
     abstract fun drinkDao(): DrinksDao

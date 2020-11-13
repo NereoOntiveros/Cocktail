@@ -1,6 +1,7 @@
 package com.nereoontiveros.cocktail.ui.viewmodel
 
 import androidx.lifecycle.*
+import com.nereoontiveros.cocktail.data.model.Drink
 import com.nereoontiveros.cocktail.data.model.DrinkEntity
 import com.nereoontiveros.cocktail.domain.Repo
 import com.nereoontiveros.cocktail.vo.Resource
@@ -34,6 +35,12 @@ class MainViewModel(private val repo:Repo):ViewModel() {
     fun saveDrink(drink:DrinkEntity){
         viewModelScope.launch {
             repo.insertDrink(drink)
+        }
+    }
+
+    fun deleteDrink(drink: Drink){
+        viewModelScope.launch {
+            repo.deleteDrink(drink)
         }
     }
 

@@ -8,15 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nereoontiveros.cocktail.AppDataBase
 import com.nereoontiveros.cocktail.R
 import com.nereoontiveros.cocktail.data.DataSource
+import com.nereoontiveros.cocktail.data.model.Drink
+import com.nereoontiveros.cocktail.data.model.DrinkEntity
 import com.nereoontiveros.cocktail.domain.RepoImpl
 import com.nereoontiveros.cocktail.ui.viewmodel.MainViewModel
 import com.nereoontiveros.cocktail.ui.viewmodel.VMFactory
 import com.nereoontiveros.cocktail.vo.Resource
+import kotlinx.android.synthetic.main.fragment_favourites.*
 
-class FavouritesFragment : Fragment() {
+class FavouritesFragment : Fragment(),MainAdapter.OnDrinkClickListener {
 
     private val viewModel by viewModels<MainViewModel> { VMFactory(
         RepoImpl(
@@ -39,13 +44,22 @@ class FavouritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupObservers()
+
+    }
+
+    private fun setupObservers(){
         viewModel.getFavouriteDrinks().observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Loading->{
 
                 }
                 is Resource.Success->{
-                    Log.d("LISTA_FAVORITOS: ","${result.data}")
+                    val drinksList:List<Drink> = result.data.map{
+                        Drink(it.drinkId,it.image,it.name,it.description,it.typeOfDrink)
+                    }
+                    rv_favourites.adapter=MainAdapter(requireContext(),drinksList,this)
                 }
                 is Resource.Failure->{
 
@@ -53,6 +67,22 @@ class FavouritesFragment : Fragment() {
             }
         })
     }
+
+    private fun setupRecyclerView(){
+        rv_favourites.layoutManager = LinearLayoutManager(requireContext())
+        rv_favourites.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
+    }
+
+
+
+
+    override fun onDrinkClick(drink: Drink,position:Int){
+        viewModel.deleteDrink(drink)
+        rv_favourites.adapter?.notifyItemRemoved(position)
+        rv_favourites.adapter?.notifyItemRangeRemoved(position,rv_favourites.adapter?.itemCount!!)
+    }
+
+
 
 
 }

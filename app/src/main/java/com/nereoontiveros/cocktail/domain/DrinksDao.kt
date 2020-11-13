@@ -1,9 +1,7 @@
 package com.nereoontiveros.cocktail.domain
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.nereoontiveros.cocktail.data.model.Drink
 import com.nereoontiveros.cocktail.data.model.DrinkEntity
 
 @Dao
@@ -13,4 +11,7 @@ interface DrinksDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavourite(drink:DrinkEntity)
+
+    @Delete
+    suspend fun deleteDrink(drink: Drink)
 }
