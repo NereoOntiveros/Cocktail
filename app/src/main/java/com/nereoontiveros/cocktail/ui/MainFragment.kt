@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nereoontiveros.cocktail.AppDataBase
 import com.nereoontiveros.cocktail.R
 import com.nereoontiveros.cocktail.data.DataSource
 import com.nereoontiveros.cocktail.data.model.Drink
@@ -24,7 +25,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment(),MainAdapter.OnDrinkClickListener{
 
-    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImpl(DataSource()))  }//dependencies injection
+    private val viewModel by viewModels<MainViewModel> { VMFactory(
+        RepoImpl(
+            DataSource(AppDataBase.getDataBase(requireActivity().applicationContext))))  }//dependencies injection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,9 @@ class MainFragment : Fragment(),MainAdapter.OnDrinkClickListener{
         setupRecyclerView()
         setupSearchView()
         setupObservers()
+        btn_go_favourites.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_favouritesFragment)
+        }
     }
 
     private fun setupObservers(){

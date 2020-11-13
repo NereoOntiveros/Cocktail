@@ -1,9 +1,11 @@
 package com.nereoontiveros.cocktail.ui.viewmodel
 
 import androidx.lifecycle.*
+import com.nereoontiveros.cocktail.data.model.DrinkEntity
 import com.nereoontiveros.cocktail.domain.Repo
 import com.nereoontiveros.cocktail.vo.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.Exception
 
 class MainViewModel(private val repo:Repo):ViewModel() {
@@ -26,6 +28,21 @@ class MainViewModel(private val repo:Repo):ViewModel() {
             }catch (e:Exception){
                 //emit(Resource.Failure(e))
             }
+        }
+    }
+
+    fun saveDrink(drink:DrinkEntity){
+        viewModelScope.launch {
+            repo.insertDrink(drink)
+        }
+    }
+
+    fun getFavouriteDrinks()= liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(repo.getFavouriteDrinks())
+        }catch (e:Exception){
+            //emit(Resource.Failure(e))
         }
     }
 }

@@ -1,11 +1,12 @@
 package com.nereoontiveros.cocktail.domain
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.nereoontiveros.cocktail.data.model.DrinkEntity
 
-
+@Dao
 interface DrinksDao {
     @Query("SELECT * FROM cocktailsEntity")
     suspend fun getAllFavouriteDrinks():List<DrinkEntity>
