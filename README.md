@@ -11,7 +11,7 @@ The app is solely written in Kotlin and implements:
 - Retrofit
 - Room
 - Navigation Components
-- Use of third part Api
+- Use of third-party REST API
 
 
 # Features
