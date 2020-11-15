@@ -4,14 +4,14 @@ This is a simple app to search and find cocktail recipes.
 
 # Project Overview
 
-The project implements:
+The app is solely written in Kotlin and implements:
 
 - Coroutines
 - MVVM architecture
 - Retrofit
 - Room
 - Navigation Components
-
+- Use of third part Api
 
 
 # Features
