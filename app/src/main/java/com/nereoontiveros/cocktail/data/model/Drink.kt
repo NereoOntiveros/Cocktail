@@ -38,3 +38,6 @@ data class DrinkEntity(
     @ColumnInfo(name = "drink_has_alcohol")
     val typeOfDrink:String ="Non_Alcoholic"
 )
+
+fun Drink.asDrinkEntity():DrinkEntity=
+    DrinkEntity(this.drinkId,this.image,this.name,this.description,this.typeOfDrink)

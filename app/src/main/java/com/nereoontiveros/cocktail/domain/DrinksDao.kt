@@ -13,5 +13,5 @@ interface DrinksDao {
     suspend fun insertFavourite(drink:DrinkEntity)
 
     @Delete
-    suspend fun deleteDrink(drink: Drink)
+    suspend fun deleteDrink(drink: DrinkEntity)
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import com.nereoontiveros.cocktail.AppDataBase
 import com.nereoontiveros.cocktail.data.model.Drink
 import com.nereoontiveros.cocktail.data.model.DrinkEntity
+import com.nereoontiveros.cocktail.data.model.asDrinkEntity
 import com.nereoontiveros.cocktail.vo.Resource
 import com.nereoontiveros.cocktail.vo.RetrofitClient
 
@@ -23,7 +24,7 @@ class DataSource (private val appDataBase: AppDataBase){
     }
 
     suspend fun deleteDrink(drink:Drink){
-        appDataBase.drinkDao().deleteDrink(drink)
+        appDataBase.drinkDao().deleteDrink(drink.asDrinkEntity())
     }
 
 }
